@@ -385,7 +385,7 @@ function Server:connect()
       -- Server disappeared ungracefully, e.g. process killed, network error, etc.
       -- Also called on manual disconnects, like our `vim.fn.jobstop`.
       function(code, msg)
-        local was_connected = Server.connected ~= self
+        local was_connected = Server.connected == self
         self:disconnect()
         if not was_connected then
           reject(msg)
