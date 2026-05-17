@@ -27,7 +27,7 @@
 ---@field title string
 ---@field subagents opencode.server.Agent[]
 ---@field subscription_job_id? number
----@field heartbeat_timer? uv_timer_t
+---@field heartbeat_timer? uv.uv_timer_t
 local Server = {}
 Server.__index = Server
 
