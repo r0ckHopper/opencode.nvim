@@ -174,8 +174,7 @@ function M.select(opts)
               return require("opencode.ui.select_server").select_server(servers)
             end)
             :next(function(server) ---@param server opencode.server.Server
-              server:connect()
-              return server
+              return server:connect()
             end)
         elseif choice.name == "server.start" then
           return require("opencode").start()

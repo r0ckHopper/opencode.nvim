@@ -11,7 +11,4 @@ local M = {}
 ---
 ---@field permissions? opencode.events.permissions.Opts
 
----@type opencode.server.Server?
-M.connected_server = nil
-
 return M

@@ -178,7 +178,7 @@ Handlers[vim.lsp.protocol.Methods.textDocument_hover] = function(params, callbac
   -- Check connected server directly rather than `server.get()`.
   -- The latter is disruptive when it doesn't find an obvious match and prompts for selection.
   -- We could use it if it allowed configuring its methods.
-  local connected_server = require("opencode.events").connected_server
+  local connected_server = require("opencode.server").connected
   if connected_server then
     -- Attach to bypass cold-start.
     -- But we still use `opencode run` instead of `prompt()` because this is a one-off,
