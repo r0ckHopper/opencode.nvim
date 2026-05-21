@@ -5,6 +5,7 @@ labels: [enhancement]
 body:
   - type: checkboxes
     attributes:
+      label: Prerequisites
       options:
         - label: I searched the docs
           required: true
