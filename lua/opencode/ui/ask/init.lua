@@ -17,8 +17,6 @@ local M = {}
 ---@param context opencode.Context
 ---@return Promise<string> input
 function M.ask(default, server, context)
-  local Promise = require("opencode.promise")
-
   ---@type snacks.input.Opts
   local input_opts = {
     default = default,
@@ -29,9 +27,9 @@ function M.ask(default, server, context)
   }
   input_opts = vim.tbl_deep_extend("force", input_opts, require("opencode.config").opts.ask)
 
-  return Promise.input(input_opts):catch(function(err)
+  return require("opencode.promise.ui").input(input_opts):catch(function(err)
     context:resume()
-    return Promise.reject(err)
+    return require("opencode.promise").reject(err)
   end)
 end
 

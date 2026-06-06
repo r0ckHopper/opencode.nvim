@@ -135,7 +135,8 @@ function M.select(opts, server)
   }
   select_opts = vim.tbl_deep_extend("force", select_opts, opts)
 
-  return Promise.select(items, select_opts)
+  return require("opencode.promise.ui")
+    .select(items, select_opts)
     :next(function(choice) ---@param choice opencode.select.Item
       if choice.__type == "prompt" then
         ---@type string

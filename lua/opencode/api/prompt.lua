@@ -14,8 +14,6 @@ function M.prompt(prompt, server, context)
     :next(function()
       if not prompt:match(" $") then
         return server:tui_execute_command("prompt.submit")
-      else
-        return true
       end
     end)
     :next(function()

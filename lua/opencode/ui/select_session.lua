@@ -18,7 +18,7 @@ function M.select_session(server)
       return a.time.updated > b.time.updated
     end)
 
-    return require("opencode.promise").select(sessions, {
+    return require("opencode.promise.ui").select(sessions, {
       prompt = "Select session (recently updated first):",
       format_item = function(item)
         local title_length = 60
