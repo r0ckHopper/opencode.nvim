@@ -54,11 +54,11 @@ https://github.com/user-attachments/assets/e85e021c-fa8f-466e-830c-c667b28f611e
       -- Your configuration, if any; goto definition on the type or field for details
     }
 
-    vim.o.autoread = true -- Required for `opts.events.reload`
+    vim.o.autoread = true -- Required for `vim.g.opencode_opts.events.reload`
 
     -- Recommended/example keymaps
-    vim.keymap.set({ "n", "x" }, "<C-a>", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask opencode…" })
-    vim.keymap.set({ "n", "x" }, "<C-x>", function() require("opencode").select() end,                          { desc = "Select opencode…" })
+    vim.keymap.set({ "n", "x" }, "<C-a>", function() require("opencode").ask("@this: ") end, { desc = "Ask opencode…" })
+    vim.keymap.set({ "n", "x" }, "<C-x>", function() require("opencode").select() end,       { desc = "Select opencode…" })
 
     vim.keymap.set({ "n", "x" }, "go",  function() return require("opencode").operator("@this ") end,        { desc = "Add range to opencode", expr = true })
     vim.keymap.set("n",          "goo", function() return require("opencode").operator("@this ") .. "_" end, { desc = "Add line to opencode", expr = true })
@@ -194,7 +194,7 @@ Select from all `opencode.nvim` functionality.
 
 - Prompts
 - Commands
-- Server controls
+- Servers
 
 Highlights and previews items when using `snacks.picker`.
 

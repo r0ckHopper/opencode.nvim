@@ -36,7 +36,7 @@ end
 ---
 --- - Prompts
 --- - Commands
---- - Server controls
+--- - Servers
 ---
 --- Highlights and previews items when using `snacks.picker`.
 ---
@@ -81,7 +81,7 @@ end
 
 ---Command `opencode`.
 ---
----@param command opencode.Command|string The command to send. Can be built-in or reference your custom commands.
+---@param command opencode.Command|string
 function M.command(command)
   require("opencode.server.discovery")
     .get()
