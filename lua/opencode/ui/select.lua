@@ -22,6 +22,7 @@ local M = {}
 ---@return Promise
 function M.select(opts, server)
   opts = vim.tbl_deep_extend("force", require("opencode.config").opts.select or {}, opts or {})
+  local config = require("opencode.config")
 
   local context = require("opencode.context").new()
   local Promise = require("opencode.promise")
@@ -81,7 +82,6 @@ function M.select(opts, server)
 
   -- Server section
   if opts.server then
-    local config = require("opencode.config")
     table.insert(items, { __group = true, name = "SERVER", preview = { text = "" } })
     table.insert(items, {
       __type = "server",
@@ -187,7 +187,7 @@ function M.select(opts, server)
               return new_server:connect()
             end)
         elseif choice.name == "server.start" then
-          return require("opencode").start()
+          return config.opts.server.start()
         end
       else
         return Promise.reject("Unknown item: " .. choice.name)
