@@ -4,6 +4,8 @@ Bridge Neovim and [OpenCode AI](https://opencode.ai/) to stay in your flow.
 
 https://github.com/user-attachments/assets/e85e021c-fa8f-466e-830c-c667b28f611e
 
+> Like what you see? Check out [my config](https://github.com/nickjvandyke/nvim).
+
 ## ✨ Features
 
 - Connect to _any_ OpenCode server, or start an integrated instance
