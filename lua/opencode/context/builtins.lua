@@ -7,8 +7,8 @@ function M.this(context)
     local from = { context.range.from[1] }
     local to = { context.range.to[1] }
     if context.range.kind ~= "line" then
-      from[2] = context.range.from[2]
-      to[2] = context.range.to[2]
+      from[2] = context.range.from[2] + 1
+      to[2] = context.range.to[2] + 1
     end
     return require("opencode.context").format({ buf = context.buf, from = from, to = to })
   else
