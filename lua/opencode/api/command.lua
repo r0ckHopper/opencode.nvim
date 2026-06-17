@@ -1,6 +1,6 @@
 local M = {}
 
----@param command opencode.server.Command|string
+---@param command opencode.server.Command | string
 ---@param server opencode.server.Server
 ---@return Promise
 function M.command(command, server)

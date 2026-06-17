@@ -72,7 +72,7 @@ end
 
 ---Command OpenCode.
 ---
----@param command opencode.server.Command|string
+---@param command opencode.server.Command | string
 function M.command(command)
   require("opencode.server.discovery")
     .get()
@@ -90,7 +90,7 @@ end
 ---
 ---@param prompt string
 function M.operator(prompt)
-  ---@param kind "char"|"line"|"block"
+  ---@param kind "char" | "line" | "block"
   _G.opencode_prompt_operator = function(kind)
     local start_pos = vim.api.nvim_buf_get_mark(0, "[")
     local end_pos = vim.api.nvim_buf_get_mark(0, "]")

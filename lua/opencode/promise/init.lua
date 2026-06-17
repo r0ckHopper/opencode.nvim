@@ -30,7 +30,7 @@ end
 
 ---Equivalent to [JavaScript's `Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 ---@class Promise<T>
----@field private _status "pending"|"fulfilled"|"rejected"
+---@field private _status "pending" | "fulfilled" | "rejected"
 ---@field private _value any
 ---@field private _queued Promise[]
 ---@field private _unhandled_detector table

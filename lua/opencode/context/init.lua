@@ -18,7 +18,7 @@ Context.__index = Context
 ---@class opencode.context.Range
 ---@field from integer[] { line, col } (1,0-based)
 ---@field to integer[] { line, col } (1,0-based)
----@field kind "char"|"line"|"block"
+---@field kind "char" | "line" | "block"
 
 local NS_ID = vim.api.nvim_create_namespace("OpencodeContext")
 

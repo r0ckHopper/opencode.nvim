@@ -3,10 +3,10 @@
 ---Bypasses local process discovery and connects directly.
 ---You _must_ run `opencode` with the `--port` flag to expose its server.
 ---If pointing to a headless server, you _must_ attach a TUI via `opencode attach <URL>`.
----@field url? string|fun(callback: fun(url?: string))
+---@field url? string | fun(callback: fun(url?: string))
 ---@field username? string Basic auth username.
 ---@field password? string Basic auth password.
----@field start? fun()|false Start an OpenCode server. Called when none are found; will retry after.
+---@field start? fun() | false Start an OpenCode server. Called when none are found; will retry after.
 
 ---An OpenCode server.
 ---@class opencode.server.Server
@@ -45,7 +45,7 @@ Server.__index = Server
 ---@class opencode.server.Agent
 ---@field name string
 ---@field description string
----@field mode "primary"|"subagent"
+---@field mode "primary" | "subagent"
 
 ---@alias opencode.server.PermissionReply
 ---| "once"
@@ -58,7 +58,7 @@ Server.__index = Server
 ---| { type: "permission.replied", properties: { requestID: number } }
 ---| { type: "server.connected" }
 ---| { type: "server.instance.disposed" }
----| { type: "session.status", properties: { status: { type: opencode.status.Status } } }
+---| { type: "session.status", properties: { status: { type: "idle" | "busy" | "error" } } }
 ---| { type: "tui.command.execute", properties: { command: string } }
 ---| { type: string, properties: table }
 
@@ -111,7 +111,7 @@ function Server:display_name()
 end
 
 ---@param path string
----@param method "GET"|"POST"
+---@param method "GET" | "POST"
 ---@param body table?
 ---@param on_success fun(response: table)
 ---@param on_error fun(msg: string?, code: number, status: number?)
@@ -254,7 +254,7 @@ function Server:tui_append_prompt(text)
   end)
 end
 
----@param command opencode.server.Command|string
+---@param command opencode.server.Command | string
 ---@return Promise
 function Server:tui_execute_command(command)
   return require("opencode.promise").new(function(resolve, reject)

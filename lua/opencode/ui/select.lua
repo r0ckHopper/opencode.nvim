@@ -1,9 +1,9 @@
 ---@module 'snacks.picker'
 
 ---@class opencode.select.Opts : snacks.picker.ui_select.Opts
----@field prompts? table<string, string>|false Prompts to display. Trailing space appends; trailing "..." opens in `ask()`.
----@field commands? table<opencode.server.Command|string, string>|false Commands to display and their descriptions.
----@field server? table<opencode.select.server.Items, string>|false Server controls to display and their descriptions.
+---@field prompts? table<string, string> | false Prompts to display. Trailing space appends; trailing "..." opens in `ask()`.
+---@field commands? table<opencode.server.Command | string, string> | false Commands to display and their descriptions.
+---@field server? table<opencode.select.server.Items, string> | false Server controls to display and their descriptions.
 
 ---@alias opencode.select.server.Items
 ---| 'server.select'
