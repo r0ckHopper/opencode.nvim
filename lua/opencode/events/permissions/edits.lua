@@ -12,10 +12,6 @@ local diff_tabpage = nil
 ---@param server opencode.server.Server
 function M.diff(event, server)
   if event.type == "permission.asked" and event.properties.permission == "edit" then
-    -- TODO: Handle multi-file edits?
-    -- When would opencode even do that?
-    -- for _, file in ipairs(event.properties.metadata.diff) do
-
     local diff = event.properties.metadata.diff
 
     local filepath = event.properties.metadata.filepath
