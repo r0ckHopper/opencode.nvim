@@ -3,7 +3,7 @@ local M = {}
 
 ---Input a prompt for OpenCode.
 ---
---- - End the prompt with a space to append instead of submit.
+--- - Passes the text to `prompt()`.
 --- - Press `<Up>` to browse recent asks.
 --- - Highlights and completes contexts and OpenCode subagents.
 ---   - Press `<Tab>` to trigger built-in completion.
@@ -52,7 +52,8 @@ M.statusline = require("opencode.events.status").statusline
 
 ---Prompt OpenCode.
 ---
---- - End the prompt with a space to append instead of submit.
+--- - Injects configured contexts.
+--- - Trailing space appends; trailing "..." opens in `ask()`.
 --- - OpenCode will interpret references to files or subagents.
 ---
 ---@param prompt string

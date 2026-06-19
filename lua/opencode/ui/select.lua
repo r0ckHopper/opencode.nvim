@@ -1,7 +1,7 @@
 ---@module 'snacks.picker'
 
 ---@class opencode.select.Opts : snacks.picker.ui_select.Opts
----@field prompts? table<string, string> | false Prompts to display. Trailing space appends; trailing "..." opens in `ask()`.
+---@field prompts? table<string, string> | false Prompts to display. Passed to `prompt()`.
 ---@field commands? table<opencode.server.Command | string, string> | false Commands to display and their descriptions.
 ---@field server? table<opencode.select.server.Items, string> | false Server controls to display and their descriptions.
 
@@ -137,18 +137,7 @@ function M.select(opts, server)
     .select(items, select_opts)
     :next(function(choice) ---@param choice opencode.select.Item
       if choice.__type == "prompt" then
-        ---@type string
-        local prompt = choice.text
-        local ask = prompt:match("%.%.%.$")
-        if ask then
-          return require("opencode.ui.ask")
-            .ask(prompt:gsub("%.%.%.$", ""), server, context)
-            :next(function(input) ---@param input string
-              return require("opencode.api.prompt").prompt(input, server, context)
-            end)
-        else
-          return require("opencode.api.prompt").prompt(prompt, server, context)
-        end
+        return require("opencode.api.prompt").prompt(choice.text, server, context)
       elseif choice.__type == "command" then
         if choice.name == "session.select" then
           return require("opencode.ui.select_session").select_session(server):next(function(session)

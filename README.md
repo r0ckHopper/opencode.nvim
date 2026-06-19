@@ -246,7 +246,7 @@ vim.api.nvim_create_autocmd('User', {
 
 Input a prompt for OpenCode.
 
-- End the prompt with a space to append instead of submit.
+- Passes the text to `prompt()`.
 - Press `<Up>` to browse recent asks.
 - Highlights and completes contexts and OpenCode subagents.
   - Press `<Tab>` to trigger built-in completion.
@@ -266,8 +266,8 @@ Highlights and previews items when using [snacks.picker](https://github.com/folk
 
 Prompt OpenCode.
 
-- End the prompt with a space to append instead of submit.
 - Injects configured contexts.
+- Trailing space appends; trailing "..." opens in `ask()`. 
 - OpenCode will interpret references to files or subagents.
 
 ### Operator — `require("opencode").operator()`
