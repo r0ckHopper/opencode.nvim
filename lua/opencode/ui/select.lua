@@ -11,16 +11,13 @@
 
 local M = {}
 
----Select from all opencode.nvim functionality.
----
+---@param context opencode.context.Context
 ---@param opts? opencode.select.Opts Override configured options for this call.
----@param server opencode.server.Server
 ---@return Promise
-function M.select(opts, server)
+function M.select(context, opts)
   opts = vim.tbl_deep_extend("force", require("opencode.config").opts.select or {}, opts or {})
   local config = require("opencode.config")
 
-  local context = require("opencode.context").new()
   local Promise = require("opencode.promise")
 
   ---@class opencode.select.Item : snacks.picker.finder.Item, { __type: "prompt" | "command" | "server" }
@@ -31,7 +28,7 @@ function M.select(opts, server)
     table.insert(items, { __group = true, name = "PROMPTS", preview = { text = "" } })
     local prompt_items = {}
     for name, prompt in pairs(opts.prompts) do
-      local rendered = context:render(prompt, server.subagents)
+      local rendered = context:render(prompt)
       ---@type snacks.picker.finder.Item
       local item = {
         __type = "prompt",
@@ -137,14 +134,14 @@ function M.select(opts, server)
     .select(items, select_opts)
     :next(function(choice) ---@param choice opencode.select.Item
       if choice.__type == "prompt" then
-        return require("opencode.api.prompt").prompt(choice.text, server, context)
+        return require("opencode.api.prompt").prompt(choice.text, context)
       elseif choice.__type == "command" then
         if choice.name == "session.select" then
-          return require("opencode.ui.select_session").select_session(server):next(function(session)
-            return server:select_session(session.id)
+          return require("opencode.ui.select_session").select_session(context.server):next(function(session)
+            return context.server:select_session(session.id)
           end)
         else
-          return require("opencode.api.command").command(choice.name, server)
+          return require("opencode.api.command").command(choice.name, context.server)
         end
       elseif choice.__type == "server" then
         if choice.name == "server.select" then

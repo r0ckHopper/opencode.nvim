@@ -14,9 +14,9 @@ function M.ask(default)
   require("opencode.server.discovery")
     .get()
     :next(function(server) ---@param server opencode.server.Server
-      local context = require("opencode.context").new()
-      return require("opencode.ui.ask").ask(default, server, context):next(function(input) ---@param input string
-        return require("opencode.api.prompt").prompt(input, server, context)
+      local context = require("opencode.context").new(server)
+      return require("opencode.ui.ask").ask(default, context):next(function(input) ---@param input string
+        return require("opencode.api.prompt").prompt(input, context)
       end)
     end)
     :catch(function(err)
@@ -39,7 +39,8 @@ function M.select(opts)
   require("opencode.server.discovery")
     .get()
     :next(function(server) ---@param server opencode.server.Server
-      return require("opencode.ui.select").select(opts, server)
+      local context = require("opencode.context").new(server)
+      return require("opencode.ui.select").select(context, opts)
     end)
     :catch(function(err)
       if err then
@@ -61,8 +62,8 @@ function M.prompt(prompt)
   require("opencode.server.discovery")
     .get()
     :next(function(server) ---@param server opencode.server.Server
-      local context = require("opencode.context").new()
-      return require("opencode.api.prompt").prompt(prompt, server, context)
+      local context = require("opencode.context").new(server)
+      return require("opencode.api.prompt").prompt(prompt, context)
     end)
     :catch(function(err)
       if err then
@@ -91,24 +92,23 @@ end
 ---
 ---@param prompt string
 function M.operator(prompt)
-  ---@param kind "char" | "line" | "block"
-  _G.opencode_prompt_operator = function(kind)
+  _G.opencode_prompt_operator = function(kind) ---@param kind "char" | "line" | "block"
     local start_pos = vim.api.nvim_buf_get_mark(0, "[")
     local end_pos = vim.api.nvim_buf_get_mark(0, "]")
     if start_pos[1] > end_pos[1] or (start_pos[1] == end_pos[1] and start_pos[2] > end_pos[2]) then
       start_pos, end_pos = end_pos, start_pos
     end
 
-    local context = require("opencode.context").new({
-      from = { start_pos[1], start_pos[2] },
-      to = { end_pos[1], end_pos[2] },
-      kind = kind,
-    })
-
     require("opencode.server.discovery")
       .get()
       :next(function(server) ---@param server opencode.server.Server
-        return require("opencode.api.prompt").prompt(prompt, server, context)
+        local context = require("opencode.context").new(server, {
+          from = { start_pos[1], start_pos[2] },
+          to = { end_pos[1], end_pos[2] },
+          kind = kind,
+        })
+
+        return require("opencode.api.prompt").prompt(prompt, context)
       end)
       :catch(function(err)
         if err then

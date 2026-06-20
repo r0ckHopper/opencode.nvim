@@ -63,8 +63,7 @@ handlers[ms.completionItem_resolve] = function(params, callback)
   local item = vim.deepcopy(params)
   local context = require("opencode.context").current
   if not item.documentation and context then
-    -- Agents can be empty here - they already have documentation attached
-    local rendered = context:render(item.label, {})
+    local rendered = context:render(item.label)
     -- Highlights won't match other locations, but there's no general way to control them.
     -- Would have to support each completion plugin separately.
     -- Markdown code blocks to preserve formatting.
@@ -80,7 +79,7 @@ handlers[ms.completionItem_resolve] = function(params, callback)
   callback(nil, item)
 end
 
----An in-process LSP that provides completions for context placeholders and agents.
+---An in-process LSP that provides completions for context placeholders and server agents.
 ---@type vim.lsp.Config
 return {
   name = "opencode_ask_cmp",

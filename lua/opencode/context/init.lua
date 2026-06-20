@@ -5,6 +5,7 @@
 ---@field buf integer
 ---@field win integer
 ---@field cursor integer[] The cursor positon. { row, col } (1,0-based).
+---@field server opencode.server.Server The OpenCode server we're communicating with.
 ---@field range? opencode.context.Range The operator range or visual selection range.
 local Context = {}
 Context.__index = Context
@@ -87,12 +88,14 @@ end
 ---@type opencode.context.Context?
 Context.current = nil
 
+---@param server opencode.server.Server
 ---@param range? opencode.context.Range The range of the operator or visual selection. Defaults to current visual selection, if any.
-function Context.new(range)
+function Context.new(server, range)
   local self = setmetatable({}, Context)
   self.win = vim.api.nvim_get_current_win()
   self.buf = vim.api.nvim_win_get_buf(self.win)
   self.cursor = vim.api.nvim_win_get_cursor(self.win)
+  self.server = server
   self.range = range or selection(self.buf)
 
   Context.current = self
@@ -115,17 +118,16 @@ function Context:resume()
   end
 end
 
----Render `opts.contexts` in `prompt`.
+---Render `vim.g.opencode_opts.contexts` in `prompt`.
 ---@param prompt string
----@param agents opencode.server.Agent[]
 ---@return { input: opencode.context.rendered.Rendered, output: opencode.context.rendered.Rendered }
-function Context:render(prompt, agents)
+function Context:render(prompt)
   local contexts = require("opencode.config").opts.contexts or {}
 
   local context_placeholders = vim.tbl_keys(contexts)
   local agent_placeholders = vim.tbl_map(function(agent)
     return "@" .. agent.name
-  end, agents)
+  end, self.server.subagents)
 
   ---@type table<string, { input: (fun(): opencode.context.rendered.Text), output: (fun(): opencode.context.rendered.Text) }>
   local placeholders = {}

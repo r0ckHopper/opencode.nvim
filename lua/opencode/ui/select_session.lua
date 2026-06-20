@@ -19,7 +19,7 @@ function M.select_session(server)
     end)
 
     return require("opencode.promise.ui").select(sessions, {
-      prompt = "Select session (recently updated first):",
+      prompt = "Select session: ",
       format_item = function(item)
         local title_length = 60
         local updated = os.date("%b %d, %Y %H:%M:%S", item.time.updated / 1000)

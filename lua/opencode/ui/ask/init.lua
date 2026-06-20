@@ -6,19 +6,16 @@
 
 local M = {}
 
----Prompt for input with `vim.ui.input`, with context- and server-aware completion.
----
 ---@param default? string Text to pre-fill the input with.
----@param server opencode.server.Server
 ---@param context opencode.context.Context
 ---@return Promise<string> input
-function M.ask(default, server, context)
+function M.ask(default, context)
   local config = require("opencode.config")
   ---@type snacks.input.Opts
   local input_opts = {
     default = default,
     highlight = function(text)
-      return context:render(text, server.subagents).input:input_highlight()
+      return context:render(text).input:input_highlight()
     end,
   }
   input_opts = vim.tbl_deep_extend("keep", config.opts.ask, input_opts)
