@@ -27,7 +27,7 @@ end
 function M.input(opts)
   return require("opencode.promise").new(function(resolve, reject)
     vim.ui.input(opts, function(input)
-      if input == nil or input == "" then
+      if input == nil then
         return reject()
       else
         resolve(input)
