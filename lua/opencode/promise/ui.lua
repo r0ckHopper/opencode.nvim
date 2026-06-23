@@ -20,7 +20,7 @@ function M.select(items, opts)
 end
 
 ---Wraps `vim.ui.input` in a `Promise`.
----Rejects on cancellation or empty input.
+---Rejects on cancellation.
 ---
 ---@param opts table
 ---@return Promise<string>

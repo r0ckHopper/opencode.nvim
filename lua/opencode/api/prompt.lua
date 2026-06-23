@@ -4,9 +4,11 @@ local M = {}
 ---@param context opencode.context.Context
 ---@return Promise<any>
 function M.prompt(prompt, context)
-  return (prompt:match("%.%.%.$") and require("opencode.ui.ask").ask(prompt:gsub("%.%.%.$", ""), context) or require(
-    "opencode.promise"
-  ).resolve(prompt))
+  local Promise = require("opencode.promise")
+  return (
+    prompt:match("%.%.%.$") and require("opencode.ui.ask").ask(prompt:gsub("%.%.%.$", ""), context)
+    or Promise.resolve(prompt)
+  )
     :next(function(_prompt)
       local plaintext = context:render(_prompt).output:plaintext()
 
@@ -21,7 +23,7 @@ function M.prompt(prompt, context)
     end)
     :catch(function(err)
       context:resume()
-      return require("opencode.promise").reject(err)
+      return Promise.reject(err)
     end)
 end
 

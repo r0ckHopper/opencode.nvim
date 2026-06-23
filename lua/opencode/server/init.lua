@@ -112,7 +112,7 @@ end
 ---@param method "GET" | "POST"
 ---@param body table?
 ---@param on_success fun(response: table)
----@param on_error fun(msg: string?, code: number, status: number?)
+---@param on_error fun(msg: string, code: number, status: number?)
 ---@param opts? { persistent?: boolean }
 ---@return number job_id
 function Server:curl(path, method, body, on_success, on_error, opts)

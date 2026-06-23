@@ -1,6 +1,13 @@
 ---opencode.nvim public API.
 local M = {}
 
+---@param err? string
+local function on_error(err)
+  if err then
+    vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
+  end
+end
+
 ---Input a prompt for OpenCode.
 ---
 --- - Passes the text to `prompt()`.
@@ -19,11 +26,7 @@ function M.ask(default)
         return require("opencode.api.prompt").prompt(input, context)
       end)
     end)
-    :catch(function(err)
-      if err then
-        vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
-      end
-    end)
+    :catch(on_error)
 end
 
 ---Select from all opencode.nvim functionality.
@@ -42,11 +45,7 @@ function M.select(opts)
       local context = require("opencode.context").new(server)
       return require("opencode.ui.select").select(context, opts)
     end)
-    :catch(function(err)
-      if err then
-        vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
-      end
-    end)
+    :catch(on_error)
 end
 
 M.statusline = require("opencode.events.status").statusline
@@ -65,11 +64,7 @@ function M.prompt(prompt)
       local context = require("opencode.context").new(server)
       return require("opencode.api.prompt").prompt(prompt, context)
     end)
-    :catch(function(err)
-      if err then
-        vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
-      end
-    end)
+    :catch(on_error)
 end
 
 ---Command OpenCode.
@@ -81,11 +76,7 @@ function M.command(command)
     :next(function(server)
       return require("opencode.api.command").command(command, server)
     end)
-    :catch(function(err)
-      if err then
-        vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
-      end
-    end)
+    :catch(on_error)
 end
 
 ---Wraps `prompt` as an operator, supporting ranges and dot-repeat.
@@ -110,11 +101,7 @@ function M.operator(prompt)
 
         return require("opencode.api.prompt").prompt(prompt, context)
       end)
-      :catch(function(err)
-        if err then
-          vim.notify(err, vim.log.levels.ERROR, { title = "opencode" })
-        end
-      end)
+      :catch(on_error)
   end
 
   vim.o.operatorfunc = "v:lua.opencode_prompt_operator"
@@ -132,4 +119,5 @@ function M.start()
     vim.notify("No `vim.g.opencode_opts.server.start` configured", vim.log.levels.ERROR, { title = "opencode" })
   end
 end
+
 return M
