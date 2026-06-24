@@ -15,7 +15,7 @@ local M = {}
 -- State
 -- ──────────────────────────────────────────────
 
----@type {server: opencode.server.Server, queue: {event: table, id: string}[], queue_index: integer, win: integer|nil, buf: integer, width: integer, visible: boolean}|nil
+---@type {server: opencode.server.Server, queue: {event: table, id: number}[], queue_index: integer, win: integer|nil, buf: integer, width: integer, visible: boolean}|nil
 local state = nil
 
 local OPTIONS = { "Once", "Always", "Reject" }
@@ -77,7 +77,7 @@ local function pad_lines(lines, width)
 end
 
 local function calc_height(n_wrap)
-  return 1 + n_wrap + 1 + 1 + 1 + 1 + 1
+  return n_wrap + 6
 end
 
 ---Return the display prefix for a permission type.
@@ -414,7 +414,7 @@ function M.hide()
   state.win = nil
   state.visible = false
   vim.schedule(function()
-    if vim.api.nvim_win_is_valid(win) then
+    if win and vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
     end
   end)
