@@ -4,6 +4,13 @@ A Neovim plugin that integrates [OpenCode](https://opencode.ai/) to keep you in 
 
 https://github.com/user-attachments/assets/e85e021c-fa8f-466e-830c-c667b28f611e
 
+## ⭐ Motivation
+
+AI works best at small, focused scopes — as a pair programmer with the human driving. You stay in control, craft the code that matters, and keep your skills sharp. opencode.nvim just provides the context and connection to make that pairing seamless.
+
+Rather than introduce yet another interaction model, opencode.nvim leverages OpenCode's existing TUI and API via standard Neovim interfaces. You keep your environment, your config, your flow.
+
+For me, the best tools are the ones that "just work." opencode.nvim is designed to be one of them.
 
 ## ✨ Features
 

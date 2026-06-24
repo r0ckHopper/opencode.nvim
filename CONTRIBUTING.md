@@ -12,15 +12,15 @@ I maintain this in my free time — please allow for variable response times and
 
 If unsure, propose changes in an issue or discussion first!
 
-- Bridge Neovim and OpenCode to maintain flow.
+- Integrate Neovim and OpenCode to maintain familiar flow.
 - Provide novel functionality first, and convenience second.
 - Simple and intuitive UX.
 
 ### Minimize maintenance burden
 
-- Prefer simple, robust, and general solutions.
-- Consider existing project patterns and edge cases.
+- Prefer simple, robust, general solutions.
 - Prefer functionality unique from OpenCode's TUI.
+- Prefer examples over plugin code for integrations.
 
 ## Code of Conduct
 
